@@ -1,8 +1,14 @@
 
 .navmenu {
 
-    margin-left: 290px;
+    margin-left: 450px;
     font-weight:600;
+}
+
+Nav.Link {
+
+    font-weight: bold;
+    color: black;
 }
 
 #logout {
