@@ -1,0 +1,40 @@
+*:focus {
+    outline: 0;
+    outline: none;
+  }
+
+.hero {
+
+    background-color: #F6F8FC
+}
+
+  h1 {
+
+    margin-top: 120px;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    max-width: 600px;
+    text-align: left;
+}
+
+.visitbutton {
+
+    margin-right: 507px;
+    border: none;
+}
+
+  .sliderimg {
+
+    margin-left: 30px;
+  }
+
+  .slidefour {
+
+    margin-left: 70px;
+  }

@@ -1,0 +1,13 @@
+.card {
+
+    border: none;
+    border-radius: 0%;
+}
+
+.icon {
+
+    border: 1px solid #f7f6f6;
+    background-color: #f7f6f6;
+    border-radius: 50%;
+    padding: 2px;
+}

@@ -8,7 +8,7 @@ import './header.css'
 const Header = () => {
   return (
     <div>
-        <Navbar expand="lg" className="bg-body-tertiary" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}>
+        <Navbar expand="lg" className="bg-body-tertiary nav" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}>
           <Container>
             <Navbar.Brand>
               <Nav.Link as={Link} to="/">

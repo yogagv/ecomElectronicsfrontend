@@ -5,6 +5,12 @@
     font-weight:600;
 }
 
+.nav {
+
+    height: 80px;
+}
+
+
 Nav.Link {
 
     font-weight: bold;
