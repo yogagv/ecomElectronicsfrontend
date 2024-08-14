@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import logo from "../../assets/images/logo-white.png";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { FaUser } from "react-icons/fa";
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css'
+import { AuthContext } from '../Context/AuthContext';
+
 
 const Header = () => {
+
+  const {user, dispatch} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const logout = () => {
+
+        dispatch({ type: "LOGOUT"});
+        navigate("/")
+  
+  }
   return (
     <div>
-        <Navbar expand="lg" className="bg-body-tertiary nav" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)' }}>
+        <Navbar expand="lg" className="bg-body-tertiary nav" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}>
           <Container>
             <Navbar.Brand>
               <Nav.Link as={Link} to="/">
@@ -27,9 +40,18 @@ const Header = () => {
                 <Nav.Link as={Link} to="/cart">
                 Cart
                 </Nav.Link>
-                <Nav.Link as={Link} to="/register">
-                Register
+                {user ? (
+                  <>
+                   <p className='mt-2 ms-2 fw-medium text-secondary'>{user.name}</p>
+                  <Nav.Link onClick={logout} id='logout'>Logout</Nav.Link>
+                  </>
+                ) : (
+                  <>
+                <Nav.Link as={Link} to="/register" id='register'>
+                <FaUser />
                 </Nav.Link>
+                  </>
+                )}
                 <Nav.Link as={Link} to="/cart">
                 <FaShoppingCart />
                 </Nav.Link>

@@ -1,94 +1,96 @@
-import {Children, createContext, useEffect, useReducer} from 'react';
+import { createContext, useEffect, useReducer } from "react";
 
 const initial_state = {
 
-    user: localStorage.getItem("user") !== null ?
+    user: localStorage.getItem("user") !== null ? 
     JSON.parse(localStorage.getItem("user")) : null,
     loading: false,
     error: null,
     token: localStorage.getItem("token") || null,
     role: localStorage.getItem("role") || null,
 
-}
+};
 
-export const AuthContext = createContext(initial_state);
+export const AuthContext = createContext(initial_state) 
 
+const AuthReducer = (state, action)=>{
 
-const AuthReducer = (state, action) => {
-
-    switch(action.type){
+    switch (action.type) {
 
         case "LOGIN_START":
         return {
             user: null,
             token: null,
-            loading: false,
+            loading : false,
             role: null,
             error: null
         };
 
         case "LOGIN_SUCCESS":
         return {
-            user: action.paylaod.user,
+            user: action.payload.user,
             token: action.payload.token,
-            loading: false,
-            role: action.payload.role,
+            loading : false,
+            role : action.payload.role,
             error: null
-        }
+        };
+
 
         case "LOGIN_FAILURE":
         return {
             user: null,
-            loading: false,
+            loading : false,
             error: action.payload
-        }
+        };
 
         case "REGISTER_SUCCESS":
         return {
             user: null,
-            loading: false,
+            loading : false,
             error: null
-        }
+        };
 
-        case "LOGOUT":
+        case "LOGOUT":            
         return {
             user: null,
             token: null,
-            loading: false,
-            role: null,
+            loading : false,
+            role : null,
             error: false
-        }
+        };
 
-        default:
-        return state;
+        default: 
+           return state;     
     }
-}
+
+};
+
+export const AuthContextProvider = ({  children }) => {
+
+const [state, dispatch] = useReducer(AuthReducer, initial_state)
 
 
-export const AuthContextProvider = ({ childern }) => {
+useEffect(() => {
 
-    const [state, dispatch] = useReducer(AuthReducer, initial_state);
+    localStorage.setItem("user", JSON.stringify(state.user));
+    localStorage.setItem("token", state.token);
+    localStorage.setItem("role", state.role);
 
-    useEffect(()=>{
+}, [state]);
 
-        localStorage.setItem("user", JSON.stringify(state.user));
-        localStorage.setItem("token", state.token);
-        localStorage.setItem("role", state.role);
-    }, [state]);
 
-    return (
-        <AuthContextProvider
+   return (
+    <AuthContext.Provider 
+    value={{
+
+        user: state.user,
+        loading: state.loading,
+        error: state.error,
+        dispatch,
         
-        value={{
-
-            user: state.user,
-            loading:state.loading,
-            error: state.error,
-            dispatch
-
-        }}>
-            {Children}
-        </AuthContextProvider>
-    )
+    }}>
+        {children}
+    </AuthContext.Provider>
+   )
 
 }

@@ -1,0 +1,35 @@
+.register {
+
+    height: 450px;
+    margin-right: 300px;
+
+}
+
+.user {
+
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    height: 400px;
+    margin-right: 200px;
+    
+}
+
+.user img {
+
+    margin-top: 50px;
+}
+
+.submit {
+
+    background-color: #0F3460;
+    color: #ffff;
+    
+}
+
+form input {
+
+    border-radius: 5px;
+    border: 1px solid grey;
+}

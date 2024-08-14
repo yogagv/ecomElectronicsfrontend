@@ -3,7 +3,6 @@ import { FaGithub } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { TiSocialFacebook } from "react-icons/ti";
-import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
@@ -36,46 +35,51 @@ const Footer = () => {
       <div className="col-md-3 mt-5">
       <h5 className='text-light ms-2 mt-3'>About Us</h5>
       <h6 className='mt-4'>
-      <Link to="/career" className='text-decoration-none fw-normal text-align-left'style={{color:"#768BA4"}} >Career</Link>
+      <Link to="/career" className='text-decoration-none fw-normal' style={{color:"#768BA4"}} >Career</Link>
       </h6>
       <h6 className='mt-3'>
-      <Link to="/ourstories" className='text-decoration-none fw-normal text-align-left' style={{color:"#768BA4"}}>Our Stores</Link>
+      <Link to="/ourstories" className='text-decoration-none fw-normal' style={{color:"#768BA4"}}>Our Stores</Link>
       </h6>
       <h6 className='mt-3'>
-      <Link to="/ourcares" className='text-decoration-none fw-normal text-align-left' style={{color:"#768BA4"}}>Our Cares</Link>
+      <Link to="/ourcares" className='text-decoration-none fw-normal' style={{color:"#768BA4"}}>Our Cares</Link>
       </h6>
       <h6 className='mt-3'>
-      <Link to="/terms&condition" className='text-decoration-none fw-normal text-align-left' style={{color:"#768BA4"}}>Terms & Condition</Link>
+      <Link to="/terms&condition" className='text-decoration-none fw-normal' style={{color:"#768BA4"}}>Terms & Condition</Link>
       </h6>
       <h6 className='mt-3'>
-      <Link to="/privacypolicy" className='text-decoration-none fw-normal text-align-left' style={{color:"#768BA4"}}>Privacy Policy</Link>
+      <Link to="/privacypolicy" className='text-decoration-none fw-normal' style={{color:"#768BA4"}}>Privacy Policy</Link>
       </h6>
       </div>
       <div className="col-md-3 mt-5">
-      <h4>Quick Links</h4>
+      <h4 className='text-light ms-2 mt-3'>Customer Care</h4>
       <h6 className='mt-4'>
-      <Link to="/gallery" className='text-decoration-none text-secondary fw-normal'>Gallery</Link>
+      <Link to="/gallery" className='text-decoration-none  fw-normal' style={{color:"#768BA4"}}>Help Center</Link>
       </h6>
       <h6 className='mt-4'>
-      <Link to="/signin" className='text-decoration-none text-secondary fw-normal mt-5'>Login</Link>
+      <Link to="/signin" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>How to Buy</Link>
       </h6>
       <h6 className='mt-4'>
-      <Link to="/register" className='text-decoration-none text-secondary fw-normal mt-5'>Register</Link>
+      <Link to="/register" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Track Your Order</Link>
+      </h6>
+      <h6 className='mt-4'>
+      <Link to="/register" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Corporate & Bulk Purchasing</Link>
+      </h6>
+      <h6 className='mt-4'>
+      <Link to="/register" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Returns & Refunds</Link>
       </h6>
       </div>
       <div className="col-md-3 mt-5">
-      <h4> Contact</h4>
-      <h6 className='mt-4  text-dark'>
-        <span className='contact'><FaMapMarkerAlt/>  </span>   
-         Address: <span className='text-secondary fw-noraml'>Shimoga, Karnataka</span>
+      <h4 className='text-light ms-2 mt-3'> Contact</h4>
+      <h6 className='mt-4  text-light'> 
+      <span className='fw-noraml' style={{color:"#768BA4"}}>70, Washington Square,<br/><span className='ms-2'>South, Newyork, NY 10012,</span> <br /> United States.</span>
       </h6>
-      <h6 className='mt-4  text-dark'>
+      <h6 className='mt-4  text-light'>
       <span className='contact'><MdEmail />  </span>   
-         Email: <span className='text-secondary fw-normal'>ait96@gmail.com</span>
+         Email: <span className='text-secondary fw-normal' style={{color:"#768BA4"}}>example@gmail.com</span>
       </h6>
-      <h6 className='mt-4  text-dark'>
+      <h6 className='mt-4  text-light'>
       <span className='contact'><FaPhone />  </span>   
-         Contact: <span className='text-secondary fw-normal'>+91 90989 70459</span>
+         Contact: <span className='text-secondary fw-normal' style={{color:"#768BA4"}}>+1 1123 456 780</span>
       </h6>
       </div>
     </div>
