@@ -2,12 +2,14 @@ import { createContext, useEffect, useReducer } from "react";
 
 const initial_state = {
 
-    user: localStorage.getItem("user") !== null ? 
-    JSON.parse(localStorage.getItem("user")) : null,
-    loading: false,
-    error: null,
-    token: localStorage.getItem("token") || null,
-    role: localStorage.getItem("role") || null,
+    user:
+    localStorage.getItem("user") !== undefined
+      ? JSON.parse(localStorage.getItem("user"))
+      : null,
+  loading: false,
+  error: null,
+  role: localStorage.getItem("role") || null,
+  token: localStorage.getItem("token") || null,
 
 };
 
@@ -19,44 +21,53 @@ const AuthReducer = (state, action)=>{
 
         case "LOGIN_START":
         return {
+
             user: null,
             token: null,
-            loading : false,
-            role: null,
-            error: null
+            loading: false,
+            error: null,
+
         };
 
         case "LOGIN_SUCCESS":
         return {
-            user: action.payload.user,
-            token: action.payload.token,
-            loading : false,
-            role : action.payload.role,
-            error: null
+
+            user: action.payload,
+            token: action.token,
+            role: action.role,
+            loading: false,
+            error: null,
+
         };
 
 
         case "LOGIN_FAILURE":
         return {
+
             user: null,
-            loading : false,
-            error: action.payload
+            loading: false,
+            error: action.payload,
+
         };
 
         case "REGISTER_SUCCESS":
         return {
+
             user: null,
-            loading : false,
-            error: null
+            loading: false,
+            error: null,
+
         };
 
         case "LOGOUT":            
         return {
+
             user: null,
+            role: null,
             token: null,
-            loading : false,
-            role : null,
-            error: false
+            loading: false,
+            error: null,
+
         };
 
         default: 
@@ -80,10 +91,10 @@ useEffect(() => {
 
 
    return (
-    <AuthContext.Provider 
+    <AuthContext.Provider
     value={{
 
-        user: state.user,
+       user: state.user,
         loading: state.loading,
         error: state.error,
         dispatch,

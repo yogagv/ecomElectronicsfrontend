@@ -18,7 +18,7 @@ Nav.Link {
     color: black;
 }
 
-#logout {
+/* #logout {
 
     border: 1px solid #FAA935;
     border-radius: 20px;
@@ -28,15 +28,5 @@ Nav.Link {
     height: 40px;
     background-color: #FAA935;
 
-}
+} */
 
-#username {
-
-    border: 1px solid #FAA935;
-    margin: 8px;
-    border-radius: 5px;
-    width: 80px;
-    padding: 2px;
-    background-color: #FAA935;
-
-}

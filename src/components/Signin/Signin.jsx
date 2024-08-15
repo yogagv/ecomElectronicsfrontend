@@ -29,14 +29,14 @@ const Signin = () => {
 
       e.preventDefault();
 
-      dispatch({type: "LOGIN_START"});
+      dispatch({ type: "LOGIN_START" });
 
       try{
 
         const res = await fetch(`${BASE_URL}/auth/userLogin`,{
         method:"POST",
         headers:{"content-type":"application/json"},
-        credentials: 'includes',
+        credentials: 'include',
         body:JSON.stringify(credentials)
         });
 
@@ -51,7 +51,7 @@ const Signin = () => {
           type: "LOGIN_SUCCESS",
           payload: result.data,
           token: result.token,
-          role: result.role
+          role: result.role,
 
         });
 
@@ -59,13 +59,9 @@ const Signin = () => {
 
       }catch(error){
         
-        dispatch({
-          type: "LOGIN_FAILURE",
-          payload: error.message
+         dispatch({ type: "LOGIN_FAILURE", payload: error.message });
 
-          });
-
-          alert("User not Found")
+          console.log(error.message)
       }
 
 

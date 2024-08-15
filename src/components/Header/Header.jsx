@@ -4,21 +4,21 @@ import logo from "../../assets/images/logo-white.png";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
+import { IoLogOut } from "react-icons/io5";
 import './header.css'
 import { AuthContext } from '../Context/AuthContext';
 
 
 const Header = () => {
 
-  const {user, dispatch} = useContext(AuthContext);
-    const navigate = useNavigate();
+  const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    const logout = () => {
+  const logout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate("/");
+  };
 
-        dispatch({ type: "LOGOUT"});
-        navigate("/")
-  
-  }
   return (
     <div>
         <Navbar expand="lg" className="bg-body-tertiary nav" style={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.2)'}}>
@@ -42,8 +42,8 @@ const Header = () => {
                 </Nav.Link>
                 {user ? (
                   <>
-                   <p className='mt-2 ms-2 fw-medium text-secondary'>{user.name}</p>
-                  <Nav.Link onClick={logout} id='logout'>Logout</Nav.Link>
+                   <p className='mt-2 ms-2 fw-medium text-bold'>{user.name}</p>
+                  <Nav.Link onClick={logout}><IoLogOut title='logout' /></Nav.Link>
                   </>
                 ) : (
                   <>

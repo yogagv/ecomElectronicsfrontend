@@ -1,13 +1,16 @@
-import React from 'react'
-import { BASE_URL } from '../utils/config'
+import React, { useContext, useState } from 'react'
+import { BASE_URL, token } from '../utils/config'
 import useFetch from '../hooks/useFetch'
 import Loading from '../Loading/Loading'
 import {  Button, Card } from 'react-bootstrap'
 import { FaStar } from "react-icons/fa6";
 import { IoIosHeart } from "react-icons/io";
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import './newarrival.css'
-import NewArrival_wireless from '../NewArrival_wireless/NewArrival_wireless'
+import NewArrivalwireless from '../NewArrival_wireless/NewArrival_wireless'
+import { AuthContext } from '../Context/AuthContext'
+
+
 
 const NewArrival = () => {
 
@@ -21,11 +24,53 @@ const NewArrival = () => {
 
     const productCategory = productData.filter((_, index) => index !== 6);
 
+
+    const [cart, setCart] = useState('');
+
+
+    const { id } = useParams();
+
+    const { user } = useContext(AuthContext);
+    
+    const handleClick = async (e) =>{
+
+        e.preventDefault();
+
+        try {
+
+            if (!user || user === undefined || user === null) {
+                return alert('Please sign in')
+            }
+
+        const res = await fetch(`${BASE_URL}/cart/addtocart/${id}`,{
+            method: "POST",
+            headers: {"content-type":"application/json"},
+            Authorization: `Bearer ${token}`,
+            body: JSON.stringify(setCart)
+        });
+
+            const result = await res.json();
+
+            if(!result.ok){
+
+                console.log(result.message);
+            }
+
+            alert('product added to cart');
+
+    }catch(error){
+
+        console.log(error.message);
+    }
+
+}
+
+
   return (
     <div className='productmobile'>
             <div className="container mt-5">
                 <h3 className='mb-4 mt-5'>New Arrival</h3>
-                {loading && <h1>{<Loading />}</h1>}
+                {loading && <h1> {<Loading />} </h1>}
                 {error && <h1>Error</h1>}
                 {
                     !loading && !error && (
@@ -61,7 +106,7 @@ const NewArrival = () => {
                         <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                         </div>
                         <div className="col-md-6">
-                        <Button className="cart_button ms-5 fw-bold"> + </Button>
+                        <Button className="cart_button ms-5 fw-bold" onClick={handleClick}> + </Button>
                         </div>
                         </div>
                         </div>
@@ -75,7 +120,7 @@ const NewArrival = () => {
                         </div>
                     )
                 }
-                <NewArrival_wireless />
+                <NewArrivalwireless />
             </div>
         </div>
   )
