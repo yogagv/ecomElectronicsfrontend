@@ -6,6 +6,7 @@ import Cart from '../Cart/Cart'
 import Register from '../Register/Register'
 import Signin from '../Signin/Signin'
 
+
 const Routing = () => {
   return (
     <div>

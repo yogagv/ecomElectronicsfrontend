@@ -28,7 +28,7 @@ const NewArrival = () => {
     const [cart, setCart] = useState('');
 
 
-    const { id } = useParams();
+    const { productId } = useParams();
 
     const { user } = useContext(AuthContext);
     
@@ -42,12 +42,14 @@ const NewArrival = () => {
                 return alert('Please sign in')
             }
 
-        const res = await fetch(`${BASE_URL}/cart/addtocart/${id}`,{
+        const res = await fetch(`${BASE_URL}/cart/addtocart/${productId}`,{
             method: "POST",
             headers: {"content-type":"application/json"},
             Authorization: `Bearer ${token}`,
             body: JSON.stringify(setCart)
         });
+
+        console.log('token:', token)
 
             const result = await res.json();
 
@@ -106,7 +108,7 @@ const NewArrival = () => {
                         <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                         </div>
                         <div className="col-md-6">
-                        <Button className="cart_button ms-5 fw-bold" onClick={handleClick}> + </Button>
+                       <Link to={product._id}><Button className="cart_button ms-5 fw-bold" onClick={handleClick}> + </Button></Link>
                         </div>
                         </div>
                         </div>

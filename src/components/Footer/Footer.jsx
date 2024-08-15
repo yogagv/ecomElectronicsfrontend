@@ -53,19 +53,19 @@ const Footer = () => {
       <div className="col-md-3 mt-5">
       <h4 className='text-light ms-2 mt-3'>Customer Care</h4>
       <h6 className='mt-4'>
-      <Link to="/gallery" className='text-decoration-none  fw-normal' style={{color:"#768BA4"}}>Help Center</Link>
+      <Link to="/helpcenter" className='text-decoration-none  fw-normal' style={{color:"#768BA4"}}>Help Center</Link>
       </h6>
       <h6 className='mt-4'>
-      <Link to="/signin" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>How to Buy</Link>
+      <Link to="/howtobuy" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>How to Buy</Link>
       </h6>
       <h6 className='mt-4'>
-      <Link to="/register" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Track Your Order</Link>
+      <Link to="/trackyourorder" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Track Your Order</Link>
       </h6>
       <h6 className='mt-4'>
-      <Link to="/register" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Corporate & Bulk Purchasing</Link>
+      <Link to="/corporate&bulkpurchasing" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Corporate & Bulk Purchasing</Link>
       </h6>
       <h6 className='mt-4'>
-      <Link to="/register" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Returns & Refunds</Link>
+      <Link to="/returns&refunds" className='text-decoration-none fw-normal mt-5' style={{color:"#768BA4"}}>Returns & Refunds</Link>
       </h6>
       </div>
       <div className="col-md-3 mt-5">
