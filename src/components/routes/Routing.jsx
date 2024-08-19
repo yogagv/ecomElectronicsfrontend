@@ -5,6 +5,7 @@ import Shop from '../Shop/Shop'
 import Cart from '../Cart/Cart'
 import Register from '../Register/Register'
 import Signin from '../Signin/Signin'
+import SingleProduct from '../SingleProduct/SingleProduct'
 
 
 const Routing = () => {
@@ -16,6 +17,7 @@ const Routing = () => {
             <Route path='/cart' element={<Cart />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/signin' element={<Signin />}/>
+            <Route path='/:id' element={<SingleProduct />}/>
         </Routes>
     </div>
   )

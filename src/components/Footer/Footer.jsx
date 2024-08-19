@@ -14,13 +14,13 @@ import './footer.css'
 const Footer = () => {
   return (
     <div>
-    <div className='footer_one'>
+    <div className='footer_one mt-2'>
     <div className="container">
     <div className="col-md-12">
       <div className="row">
       <div className="col-md-3 tourfooter">
         <div className="logo-container">
-        <BsBagFill color='white' size={25} className='mt-5 logo-icon'/><span><h3 className='logo-text'>Mart</h3></span>
+        <BsBagFill color='white' size={25} className='mt-5 logo-icon'/><span><Link as={Link} to="/" className='text-decoration-none'><h3 className='logo-text text-light'>Mart</h3> </Link></span>
         </div>
           <p className='lh-sm' style={{color:"#768BA4"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, 
             in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.</p>
