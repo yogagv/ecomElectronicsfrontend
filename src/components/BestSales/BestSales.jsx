@@ -47,7 +47,9 @@ const BestSales = () => {
                             </div>
                         </div>
                         <Card.Body>
-                        <Link to={product._id} className='text-decoration-none text-dark'><Card.Title className='text-start'>{product.name}</Card.Title>
+                        <Link to={product._id} className='text-decoration-none text-dark'>
+                        <Card.Img  src={product.imageurl} className='card-img-top img-fluid'/>
+                        <Card.Title className='text-start'>{product.name}</Card.Title>
                         </Link>
                         <Card.Text className='text-start'><FaStar className='star'/>
                         <span><FaStar className='star'/></span>

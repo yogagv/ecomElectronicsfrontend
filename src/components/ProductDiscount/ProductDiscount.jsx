@@ -6,7 +6,8 @@ import Loading from '../Loading/Loading'
 import {  Button, Card } from 'react-bootstrap'
 import { FaStar } from "react-icons/fa6";
 import { IoIosHeart } from "react-icons/io";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { IoMdAddCircle } from "react-icons/io";
 
 const ProductDiscount = () => {
 
@@ -33,7 +34,7 @@ const ProductDiscount = () => {
                                     productData?.map((product) => (
                                         <div className="col-md-4 mb-4" key={product._id}>
                                             <Card style={{ width: '18rem' }}>
-                        <Card.Img  src={product.imageurl} className='card-img-top img-fluid' />
+                                            <Link to={product._id}><Card.Img  src={product.imageurl} className='card-img-top img-fluid' /></Link>
                         <div className="col-md-12">
                             <div className="row">
                                 <div className="col-md-6">
@@ -59,7 +60,7 @@ const ProductDiscount = () => {
                         <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                         </div>
                         <div className="col-md-6">
-                        <Button className="cart_button ms-5 fw-bold"> + </Button>
+                        <Button className=" ms-5 fw-bold"> <IoMdAddCircle /> </Button>
                         </div>
                         </div>
                         </div>

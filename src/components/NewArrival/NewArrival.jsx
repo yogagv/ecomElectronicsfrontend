@@ -82,11 +82,11 @@ const NewArrival = () => {
                                     productCategory?.map((product) => (
                                         <div className="col-md-4 mb-4" key={product._id}>
                                             <Card style={{ width: '18rem' , background:"#FAFAFA"}}>
-                        <Card.Img  src={product.imageurl} className='card-img-top img-fluid' style={{background:"#FAFAFA"}} />
+                                                <Link to={product._id}><Card.Img  src={product.imageurl} className='card-img-top img-fluid' style={{background:"#FAFAFA"}}/>
+                                                </Link>
                         <div className="col-md-12">
                             <div className="row">
                                 <div className="col-md-6">
-                                
                                 </div>
                                 <div className="col-md-6 icon">
                                 <IoIosHeart/>

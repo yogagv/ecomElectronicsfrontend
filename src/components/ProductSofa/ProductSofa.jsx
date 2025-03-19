@@ -1,27 +1,27 @@
 import React from 'react'
-import { BASE_URL } from '../utils/config'
 import useFetch from '../hooks/useFetch'
+import { BASE_URL } from '../utils/config'
 import Loading from '../Loading/Loading'
-import {  Button, Card } from 'react-bootstrap'
-import { FaStar } from "react-icons/fa6";
-import { IoIosHeart } from "react-icons/io";
+import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import './newarrival_wireless.css'
+import { IoIosHeart, IoMdAddCircle } from 'react-icons/io'
+import { FaStar } from 'react-icons/fa6'
 
-const NewArrival_wireless = () => {
 
-    const {
+const ProductSofa = () => {
 
-        data: productData,
-        loading,
-        error
+  const {
 
-    } = useFetch(`${BASE_URL}/product/productByCategory/wireless`)
+    data: productData,
+    loading,
+    error
+
+} = useFetch(`${BASE_URL}/product/productByCategory/sofa`)
 
   return (
-
-    <div className='productwireless'>
+    <div className='product'>
             <div className="container mt-5">
+                <h3 className='mb-4 mt-5'>Big Discounts</h3>
                 {loading && <h1>{<Loading />}</h1>}
                 {error && <h1>Error</h1>}
                 {
@@ -29,18 +29,14 @@ const NewArrival_wireless = () => {
                         <div className="container mt-5">
                             <div className="row">
                                 {
-                                    productData?.map((product, index) => (
-                                        <div className="col-md-4 mb-4" key={product._id} style={{
-                                            marginLeft: index === 3 ? 'auto' : '',
-                                            marginRight: index === 3 ? 'auto' : '',
-                                          }} >
-                                            <Card style={{ width: '18rem', background:"#FAFAFA" }}>
-                      <Link to={product._id}><Card.Img  src={product.imageurl} className='card-img-top img-fluid' style={{background:"#FAFAFA"}}/>
-                      </Link>
+                                    productData?.map((product) => (
+                                        <div className="col-md-4 mb-4" key={product._id}>
+                                            <Card style={{ width: '18rem' }}>
+                                            <Link to={product._id}><Card.Img  src={product.imageurl} className='card-img-top img-fluid' /></Link>
                         <div className="col-md-12">
                             <div className="row">
                                 <div className="col-md-6">
-                               
+                                <div class="discount-text">{product.discount} % Off</div>
                                 </div>
                                 <div className="col-md-6 icon">
                                 <IoIosHeart/>
@@ -62,7 +58,7 @@ const NewArrival_wireless = () => {
                         <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                         </div>
                         <div className="col-md-6">
-                        <Button className="cart_button ms-5 fw-bold"> + </Button>
+                        <Button className=" ms-5 fw-bold"> <IoMdAddCircle /> </Button>
                         </div>
                         </div>
                         </div>
@@ -81,4 +77,4 @@ const NewArrival_wireless = () => {
   )
 }
 
-export default NewArrival_wireless
+export default ProductSofa

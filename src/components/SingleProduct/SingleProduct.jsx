@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import productcover from '../../assets/images/table.jpg';
 import './singleproduct.css'
 import { FaStar } from 'react-icons/fa6';
-import Cart from '../Cart/Cart';
 
 const SingleProduct = () => {
 
@@ -26,7 +25,7 @@ const SingleProduct = () => {
     const handleSubmit = (e) => {
 
         e.preventDefault();
-        
+
     }
 
   return (
@@ -59,9 +58,9 @@ const SingleProduct = () => {
                         </div>
                         <p className='p_description'>{productData.description}</p>
                         <form onSubmit={handleSubmit}>
-                            <input type="number" id='cart' className='carttext' onClick={handleClick}/>
+                            <input type="text" id='cart' className='carttext' onClick={handleClick}/>
                             <br />
-                            <button className='mt-2'>Add to Cart</button>
+                            <button className='mt-2 cartbutton'>Add to Cart</button>
                         </form>
                 </div>
                 </div>

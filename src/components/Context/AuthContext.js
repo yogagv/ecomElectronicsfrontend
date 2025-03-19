@@ -89,7 +89,6 @@ useEffect(() => {
 
 }, [state]);
 
-
    return (
     <AuthContext.Provider
     value={{

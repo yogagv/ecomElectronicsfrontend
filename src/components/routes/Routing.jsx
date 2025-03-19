@@ -8,6 +8,7 @@ import Signin from '../Signin/Signin'
 import SingleProduct from '../SingleProduct/SingleProduct'
 
 
+
 const Routing = () => {
   return (
     <div>
@@ -18,6 +19,7 @@ const Routing = () => {
             <Route path='/register' element={<Register />}/>
             <Route path='/signin' element={<Signin />}/>
             <Route path='/:id' element={<SingleProduct />}/>
+            <Route path='/shop/:id' element={<SingleProduct />}/>
         </Routes>
     </div>
   )
