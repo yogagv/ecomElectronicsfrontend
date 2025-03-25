@@ -108,7 +108,7 @@ const NewArrival = () => {
                         <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                         </div>
                         <div className="col-md-6">
-                       <Link to={product._id}><Button className="cart_button ms-5 fw-bold" onClick={handleClick}> + </Button></Link>
+                       <Link to={product._id}><Button className="cart_button ms-5 fw-bold" onClick={handleClick} value={cart}> + </Button></Link>
                         </div>
                         </div>
                         </div>
