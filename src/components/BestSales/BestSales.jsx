@@ -1,12 +1,13 @@
-import React from 'react'
-import { BASE_URL } from '../utils/config'
+import React, { useContext } from 'react'
+import { BASE_URL, token } from '../utils/config'
 import useFetch from '../hooks/useFetch'
 import Loading from '../Loading/Loading'
 import {  Button, Card } from 'react-bootstrap'
 import { FaStar } from "react-icons/fa6";
 import { IoIosHeart } from "react-icons/io";
-import { Link } from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 import './bestsales.css'
+import { AuthContext } from '../Context/AuthContext'
 
 const BestSales = () => {
 
@@ -17,6 +18,60 @@ const BestSales = () => {
         error
 
     } = useFetch(`${BASE_URL}/product/productByCategory/sofa`)
+
+    const { user } = useContext(AuthContext)
+
+    const handleAddToCart = async (e, productId) => {
+
+        e.preventDefault();
+
+        try {
+
+        if(!user || user === undefined || user === null ) {
+
+            return alert('Please Login to add product to cart');
+        }
+
+        const productAdd = productData.find(item => item._id === productId)
+
+        if(!productAdd) {
+
+            return alert('Product not found!')
+        }
+
+        const res = await fetch(`${BASE_URL}/cart/addtocart/${productId}`,{
+
+                method: 'POST',
+                headers: {
+                    "content-type":"application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    productId,
+                    price: productAdd.price,
+                    quantity: 1
+                })
+        })
+
+        const result = await res.json();
+
+            if(!res.ok){
+
+                console.error("Error adding to cart:", result.message);
+                return alert("Failed to add product to cart.");
+            }
+
+            alert('product added to cart');
+            console.log(result.message);
+            
+
+    } catch(error) {
+
+        console.log(error.message)
+        alert('something went wrong!')
+    }
+
+    }
 
   return (
     <div className='product'>
@@ -31,15 +86,16 @@ const BestSales = () => {
                                 {
                                     productData?.map((product, index) => (
                                         <div className="col-md-4 mb-4" key={product._id} style={{
-                                            marginLeft: index === 6 ? 'auto' : '',
+                                            marginLeft: index ===  6 ? 'auto' : '',
                                             marginRight: index === 6 ? 'auto' : '',
-                                          }}>
-                                            <Card style={{ width: '18rem'}}>
-                        <Card.Img  src={product.imageurl} className='card-img-top img-fluid'/>
+                                          }} >
+                                            <Card style={{ width: '18rem', background:"#FAFAFA" }}>
+                      <Link to={product._id}><Card.Img  src={product.imageurl} className='card-img-top img-fluid' style={{background:"#FAFAFA"}}/>
+                      </Link>
                         <div className="col-md-12">
                             <div className="row">
                                 <div className="col-md-6">
-                                
+                               
                                 </div>
                                 <div className="col-md-6 icon">
                                 <IoIosHeart/>
@@ -47,9 +103,7 @@ const BestSales = () => {
                             </div>
                         </div>
                         <Card.Body>
-                        <Link to={product._id} className='text-decoration-none text-dark'>
-                        <Card.Img  src={product.imageurl} className='card-img-top img-fluid'/>
-                        <Card.Title className='text-start'>{product.name}</Card.Title>
+                        <Link to={product._id} className='text-decoration-none text-dark'><Card.Title className='text-start'>{product.name}</Card.Title>
                         </Link>
                         <Card.Text className='text-start'><FaStar className='star'/>
                         <span><FaStar className='star'/></span>
@@ -63,7 +117,7 @@ const BestSales = () => {
                         <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                         </div>
                         <div className="col-md-6">
-                        <Button className="cart_button ms-5 fw-bold"> + </Button>
+                        <Button className="cart_button ms-5 fw-bold" onClick={(e)=>{handleAddToCart(e, product._id)}}> + </Button>
                         </div>
                         </div>
                         </div>

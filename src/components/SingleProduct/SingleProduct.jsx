@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import useFetch from '../hooks/useFetch'
 import { BASE_URL, token } from '../utils/config'
 import { useParams } from 'react-router-dom'
@@ -20,9 +20,6 @@ const SingleProduct = () => {
            loading,
            error
     } = useFetch(`${BASE_URL}/product/singleProduct/${id}`);
-
-
-    console.log(productData.name);
     
 
     const handleChange = (e) => {
@@ -34,6 +31,12 @@ const SingleProduct = () => {
             setAddtoCart(1);
         }
     };
+
+    useEffect(() => {
+        if (productData && productData.name) {
+          console.log(productData.name);
+        }
+      }, [productData]);
 
     const handleSubmit = async (e) => {
 
