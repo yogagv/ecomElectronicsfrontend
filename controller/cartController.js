@@ -38,6 +38,8 @@ export const addtoCart = async (req, res, next) => {
 
         let cart = await Cart.findOne({ "user.id": userId, "product.id": productId });
 
+        console.log(cart);
+
         if (cart) {
 
             cart.quantity += Number(quantity);
@@ -102,18 +104,22 @@ export const getCart = async (req, res, next) => {
 
     try{
 
-        const cart = await Cart.find({'user.id': userId});
+        const cart = await Cart.find({$or: [
+            { 'user.id': userId },
+            { 'user': userId },
+            { 'userId': userId }
+          ]});
+          
         console.log('Cart Data:', cart);
 
+        if(!cart || cart.length === 0){
+
+            return res.status(404).json({success:false, message:"Cart not found!"})
+        }
 
         const totalAmount = cart.reduce((acc, item) => acc + item.total, 0);
 
         console.log('Total Amount from Backend:', totalAmount);
-
-        if(!cart){
-
-            return res.status(404).json({success:false, message:"Cart not found!"})
-        }
 
             res.status(200).json({success:true, message:"Cart found successfully!", data: cart, totalAmt: totalAmount});
 
