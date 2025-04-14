@@ -107,7 +107,7 @@ import './shop.css';
 import { BASE_URL, token } from '../utils/config';
 import { Button, Card } from 'react-bootstrap';
 import { FaStar } from 'react-icons/fa6';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IoIosHeart,  } from 'react-icons/io';
 import { AuthContext } from '../Context/AuthContext';
 
@@ -117,7 +117,6 @@ const Shop = () => {
   const [category, setCategory] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cart, setCart] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -171,27 +170,33 @@ const Shop = () => {
     fetchProducts();
   }, [category]);
 
-
-  
-      const { productId } = useParams();
   
       const { user } = useContext(AuthContext);
       
-      const handleSubmit = async (e) =>{
+      const handleAddToCart = async (e, productId) =>{
   
-          e.preventDefault();
-  
+                      e.preventDefault();
           try {
   
               if (!user || user === undefined || user === null) {
                   return alert('Please sign in')
               }
+
+              const productToAdd = product.find(item => item._id === productId);
+
+              if (!productToAdd) {
+                return alert('Product not found');
+              }
   
-          const res = await fetch(`${BASE_URL}/cart/addtocart/${productId}`,{
+          const res = await fetch(`${BASE_URL}/cart/addtoCart/${productId}`,{
               method: "POST",
-              headers: {"content-type":"application/json"},
-              Authorization: `Bearer ${token}`,
-              body: JSON.stringify(setCart)
+              headers: {
+                "content-type":"application/json",
+                "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify({ productId,
+                price: productToAdd.price,
+                quantity: 1 })
           });
   
           console.log('token:', token)
@@ -267,7 +272,7 @@ const Shop = () => {
                              <div className="col-md-12">
                                  <div className="row">
                                      <div className="col-md-6">
-                                     <div class="discount-text">{product.discount} % Off</div>
+                                     <div className="discount-text">{product.discount} % Off</div>
                                      </div>
                                      <div className="col-md-6 icon">
                                      <IoIosHeart/>
@@ -275,7 +280,7 @@ const Shop = () => {
                                  </div>
                              </div>
                              <Card.Body>
-                             <Link to={product._id} className='text-decoration-none text-dark'><Card.Title className='text-start'>{product.name}</Card.Title>
+                             <Link to={`/product/${product._id}`} className='text-decoration-none text-dark'><Card.Title className='text-start'>{product.name}</Card.Title>
                              </Link>
                              <Card.Text className='text-start'><FaStar className='star'/>
                              <span><FaStar className='star'/></span>
@@ -292,7 +297,7 @@ const Shop = () => {
                              <Card.Text className='text-start fw-bold fs-5'>${product.price}</Card.Text>
                              </div>
                              <div className="col-md-6">
-                            <Link to={product._id}><Button className="cart_button ms-5 fw-bold" onClick={handleSubmit}> + </Button></Link>
+                            <Button className="cart_button ms-5 fw-bold" onClick={(e) => handleAddToCart(e, product._id)}> + </Button>
                              </div>
                              </div>
                              </div>

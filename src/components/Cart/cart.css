@@ -3,3 +3,9 @@
     height: 30vh;
     padding: 35px;
 }
+
+.cartdata {
+
+    border: 1px solid #000;
+    border-radius: 8px;
+}

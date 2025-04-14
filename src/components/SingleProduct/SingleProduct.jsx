@@ -22,6 +22,8 @@ const SingleProduct = () => {
     } = useFetch(`${BASE_URL}/product/singleProduct/${id}`);
 
 
+    console.log(productData.name);
+    
 
     const handleChange = (e) => {
 
@@ -50,10 +52,10 @@ const SingleProduct = () => {
                         "content-type":"application/json",
                          "Authorization": `Bearer ${token}`
                     },
-                    body: JSON.stringify({ quantity: addtocart })
+                    body: JSON.stringify({ quantity: parseInt(addtocart) })
                 });
         
-                console.log('token:', token)
+                console.log('token:')
 
                 console.log("Product ID:", id);
         
@@ -107,9 +109,9 @@ const SingleProduct = () => {
                         <p className='p_description'>{productData.description}</p>
                         <form onSubmit={handleSubmit}>
                             <input type="number" id='cart' className='carttext' onChange={handleChange} value={addtocart}/>
-                            <br />
-                            <button className='mt-2 cartbutton'>Add to Cart</button>
-                        </form>
+                         <br />
+                         <button className='mt-2 cartbutton'>Add to Cart</button>
+                    </form>
                 </div>
                 </div>
                 </div>

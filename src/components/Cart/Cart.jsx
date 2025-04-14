@@ -1,34 +1,56 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import useFetch from '../hooks/useFetch'
-import { Link, useParams } from 'react-router-dom'
-import { BASE_URL } from '../utils/config'
+import { BASE_URL, token } from '../utils/config'
 import Loading from '../Loading/Loading'
 import { AuthContext } from '../Context/AuthContext'
-import { Nav } from 'react-bootstrap'
 import './cart.css'
+
 
 const Cart = () => {
 
-  const { id } = useParams()
-
+  const [trigger, setTrigger] = useState(0);
   const {user} = useContext(AuthContext)
 
 
   const {data:cartData,
          loading,
-         error
-        }  = useFetch(`${BASE_URL}/cart/getCart/${id}`)
-  
+         error,
+        //  setData: setCartData
+        }  = useFetch(`${BASE_URL}/cart/getCart/${user._id}`, trigger)
 
-        if (!user) {
+        console.log(cartData);
 
-          return (
-            <div className="text-center mt-5 cart-display">
-              <h2>Please log in to view your cart</h2>
-              <Nav.Link as={Link} to="/signin" id='register' className='fw-bold'>Sign in 
-                </Nav.Link>
-            </div>
-          );
+        // const totalAmount = cartData?.totalAmt || 0;
+
+        const handleRemove = async (userId, ProductId) => {
+
+          try{
+
+            const res = await fetch(`${BASE_URL}/cart/removeCart/${userId}/${ProductId}`, {
+              method:"DELETE",
+              headers:{
+                "Authorization":`Bearer ${token}`
+              },
+              body: JSON.stringify({ quantity: 1 })
+            })
+
+            const data = await res.json();
+            if(!res.ok){
+
+              console.error("Error removing product:", data);
+            }
+            else{
+
+              console.log(data.message);
+              setTrigger(Date.now());
+            }
+              
+        } catch(error) {
+
+          console.error('Unable to remove the product:', error);
+              
+        }
+
         }
 
   return (
@@ -37,29 +59,36 @@ const Cart = () => {
     {loading && <h1><Loading /></h1>}
 {error && <h1>Error</h1>}
 {!loading && !error && (
-  cartData && cartData.length > 0 ? (
-    cartData.map((product) => (
-      <div className="container" key={product.id}>
+  cartData && cartData.length > 0 ? 
+    cartData.map((items) => (
+        <div className="container" key={items._id}>
         <div className="row w-100 cartdata mt-3">
           <div className="col-md-4 mt-4">
-            <img src={product.image} className="img-fluid h-75 w-50 ms-5 mt-1" alt={product.title} />
+            <img src={items.product.imageurl} className="h-100 w-50 ms-5" alt="" />
           </div>
           <div className="col-md-6">
-            <h4 className="pt-2">{product.title}</h4>
-            <h4 className="pt-2">{product.category}</h4>
-            <p className="pt-2">{product.description}</p>
+            <h4 className="pt-2">{items.product.name}</h4>
+            <h4 className="pt-2">{items.product.category}</h4>
+            <p className="pt-2">{items.product.shortDesc}</p>
           </div>
           <div className="col-md-2 mt-5">
-            <div>Price: ${product.price}</div>
+          <div className='mt-2'>Quantity: {items.quantity}</div>
+            <div className='mt-2'>Price: ${items.total}</div>
+            <button className='btn btn-danger mt-2' onClick={() => {handleRemove(user._id, items.product.id)}}>Remove</button>
           </div>
         </div>
       </div>
     ))
-  ) : (
+   : (
     <h2 className="text-center">Cart is empty</h2>
   )
 )}
 
+{!loading && !error && cartData && (
+        <div className="text-center mt-4">
+          <h3>Total Amount: $ {cartData?.totalAmt}</h3>
+        </div>
+      )}
     
     </>
   )

@@ -37,9 +37,6 @@ const Header = () => {
                 <Nav.Link as={Link} to="/shop">
                 Shop
                 </Nav.Link>
-                <Nav.Link as={Link} to="/cart">
-                Cart
-                </Nav.Link>
                 {user ? (
                   <>
                    <p className='mt-2 ms-2 fw-medium text-bold'>{user.name}</p>
@@ -52,7 +49,12 @@ const Header = () => {
                 </Nav.Link>
                   </>
                 )}
-                <Nav.Link as={Link} to="/cart">
+                <Nav.Link as={Link} to={user ? `/cart/${user._id}` : '#'}
+                onClick={(e) => {
+                  if (!user) {
+                    e.preventDefault(); 
+                    alert('Please login to view your cart');
+                  }}}>
                 <FaShoppingCart />
                 </Nav.Link>
               </Nav>
