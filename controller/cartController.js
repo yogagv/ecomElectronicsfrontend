@@ -4,7 +4,7 @@ import Cart from '../models/CartSchema.js';
 
 export const addtoCart = async (req, res, next) => {
 
-    const { quantity, total, totalAmount } = req.body;
+    const { quantity} = req.body;
     
     try{
 
@@ -41,8 +41,18 @@ export const addtoCart = async (req, res, next) => {
         if (cart) {
 
             cart.quantity += Number(quantity);
-            cart.total += Number(total);
+            cart.total += cart.quantity * price;
             await cart.save();
+
+            const cartItems = await Cart.find({ "user.id": userId });
+            const totalAmount = cartItems.reduce((acc, item) => acc + item.total, 0);
+    
+    res.status(200).json({
+        success: true, 
+        message: "Cart updated successfully!", 
+        cart: cart, 
+        totalAmount: totalAmount
+    });
 
         } else {
 
@@ -58,7 +68,10 @@ export const addtoCart = async (req, res, next) => {
 
                 id: productId,
                 name: product.name,
-                price: product.price
+                price: product.price,
+                imageurl: product.imageurl,
+                shortDesc: product.shortDesc
+
             },
 
             quantity,
@@ -68,11 +81,9 @@ export const addtoCart = async (req, res, next) => {
         const pcart = await productCart.save();
 
         const cartItems = await Cart.find({ "user.id": userId });
-
         const totalAmount = cartItems.reduce((acc, item) => acc + item.total, 0);
 
-        res.status(200).json({success:true, message:"Product successfully added to cart!", pcart,
-            totalAmount: totalAmount});
+        res.status(200).json({success:true, message:"Product successfully added to cart!", pcart, totalAmount: totalAmount});
 
    }}
    
@@ -92,13 +103,19 @@ export const getCart = async (req, res, next) => {
     try{
 
         const cart = await Cart.find({'user.id': userId});
+        console.log('Cart Data:', cart);
+
+
+        const totalAmount = cart.reduce((acc, item) => acc + item.total, 0);
+
+        console.log('Total Amount from Backend:', totalAmount);
 
         if(!cart){
 
             return res.status(404).json({success:false, message:"Cart not found!"})
         }
 
-            res.status(200).json({success:true, message:"Cart found successfully!", data: cart});
+            res.status(200).json({success:true, message:"Cart found successfully!", data: cart, totalAmt: totalAmount});
 
     }catch(error){
 
@@ -142,7 +159,7 @@ export const removeCart = async (req, res, next) => {
             return res.status(404).json({ success: false, message: "Product not found in cart!" });
         }
 
-        const qtyToRemove = Number(quantity);
+        const qtyToRemove = Number(quantity) || cart.quantity;;
 
         if (isNaN(qtyToRemove) || qtyToRemove <= 0) {
 

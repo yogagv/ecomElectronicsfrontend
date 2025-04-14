@@ -27,6 +27,16 @@ const CartSchema = new mongoose.Schema({
             type: String
         },
 
+        imageurl: {
+
+            type: String
+        },
+
+        shortDesc: {
+
+            type: String
+        },
+
         price: {
 
             type: Number
