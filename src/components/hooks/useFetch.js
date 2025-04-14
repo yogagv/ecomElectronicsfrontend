@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 
-const useFetch = (url, trigger) => {
+const useFetch = (url, trigger = null) => {
 
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
@@ -16,6 +16,13 @@ const useFetch = (url, trigger) => {
         try{
 
             const res = await fetch(url);
+
+            if (res.status === 404) {
+                setData([]);  // Empty array for empty cart
+                setLoading(false);
+                return;
+              }
+
             if(!res.ok){
                 setError("Falied to fetch Data");
             }

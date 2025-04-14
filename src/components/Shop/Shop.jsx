@@ -182,6 +182,11 @@ const Shop = () => {
                   return alert('Please sign in')
               }
 
+              if (!user.role === "user") {
+
+                return alert('You are not authorized')
+              }
+
               const productToAdd = product.find(item => item._id === productId);
 
               if (!productToAdd) {

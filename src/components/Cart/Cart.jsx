@@ -21,31 +21,48 @@ const Cart = () => {
         //  setData: setCartData
         }  = useFetch(`${BASE_URL}/cart/getCart/${user._id}`, trigger)
 
-        console.log(cartData);
+        console.log(cartData);        
 
         useEffect(() => {
-          console.log("Complete cart response:", cartData);
+          console.log("Raw cart response:", cartData);
+
+          // Handle case where cart is empty (404 error)
+    if (error && error.message && error.message.includes('404')) {
+      console.log("Cart is empty");
+      setCartItems([]);
+      setTotalAmount(0);
+      return;
+    }
           
+          // Check if cartData exists and has items
           if (cartData) {
-            // Check the structure
-            // console.log("Cart data type:", typeof cartData);
-            // console.log("Is data array?", Array.isArray(cartData.data));
+            let items = [];
+            let total = 0;
             
-            if (cartData.data && Array.isArray(cartData.data)) {
-              // console.log("Cart items count:", cartData.data.length);
-              setCartItems(cartData.data);
-              setTotalAmount(cartData.totalAmt || 0);
-            } else if (Array.isArray(cartData)) {
-              // If cartResponse itself is an array
-              // console.log("CartResponse is an array with length:", cartData.length);
-              setCartItems(cartData);
-              // In this case we don't have a separate total field
-              // Calculate total from items
-              const total = cartData.reduce((sum, item) => sum + (item.total || 0), 0);
-              setTotalAmount(total);
+            // Case 1: Data is directly in cartData
+            if (Array.isArray(cartData)) {
+              items = cartData;
+              total = cartData.reduce((sum, item) => sum + (parseInt(item.total) || 0), 0);
+            } 
+            // Case 2: Data is in cartData.data
+            else if (cartData.data && Array.isArray(cartData.data)) {
+              items = cartData.data;
+              total = cartData.totalAmt || items.reduce((sum, item) => sum + (parseInt(item.total) || 0), 0);
+            } 
+            // Case 3: Data contains success property (from our updated backend)
+            else if (cartData.success && cartData.data && Array.isArray(cartData.data)) {
+              items = cartData.data;
+              total = cartData.totalAmt || 0;
             }
+            
+            console.log("Processed cart items:", items);
+            console.log("Calculated total:", total);
+            
+            setCartItems(items);
+            setTotalAmount(total);
           }
         }, [cartData]);
+      
 
         // const totalAmount = cartData?.totalAmt || 0;
 
@@ -94,7 +111,7 @@ const Cart = () => {
             <img src={items.product.imageurl} className="h-100 w-50 ms-5" alt="" />
           </div>
           <div className="col-md-6">
-            <h4 className="pt-2">{items.product.name}</h4>
+            <h4 className="pt-2">{items.product?.name}</h4>
             <h4 className="pt-2">{items.product.category}</h4>
             <p className="pt-2">{items.product.shortDesc}</p>
           </div>
